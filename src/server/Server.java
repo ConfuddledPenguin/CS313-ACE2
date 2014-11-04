@@ -5,13 +5,26 @@ import java.net.*;
 
 import message.*;
 
+/**
+ * 
+ * The server class.
+ * 
+ * @author Tom
+ *
+ */
 public class Server{
 	
-	
+	/**
+	 * Its starts here
+	 * @param args none
+	 */
 	public static void main(String[] args){
 		Server s = new Server();
 	}
 	
+	/**
+	 * 
+	 */
 	public Server(){
 		
 		try{
@@ -28,7 +41,7 @@ public class Server{
 				
 				while ( (line = br.readLine()) != null){
 					
-					MessageImp1 m = new MessageImp1();
+					MessageImp m = new MessageImp();
 					m.setCounts(line);
 					
 					ObjectOutputStream os = new ObjectOutputStream(client.getOutputStream());
@@ -41,9 +54,6 @@ public class Server{
 			
 		}catch(Exception e){
 			e.printStackTrace();
-		}
-		
+		}	
 	}
-
-
 }

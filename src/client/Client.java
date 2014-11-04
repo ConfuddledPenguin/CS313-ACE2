@@ -3,9 +3,10 @@ package client;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
+import java.lang.invoke.WrongMethodTypeException;
 import java.net.Socket;
 
-import message.MessageImp1;
+import message.MessageImp;
 
 /**
  * The client for this system.
@@ -14,13 +15,30 @@ import message.MessageImp1;
  */
 public class Client{
 	
+	UserIO io;
+	
+	/**
+	 * It start here
+	 * @param args none
+	 */
 	public static void main(String[] args){
+		@SuppressWarnings("unused")
 		Client c = new Client();
 	}
 	
+	/**
+	 * The constructor for the Client.
+	 * Since I possess a high degree of laziness the code is all in here.
+	 * 
+	 * This method gets input to the user in the form of a string, which 
+	 * is then passed to the server.
+	 * 
+	 * The client then waits for a response getting more and more 
+	 * agitated until it gets one. It then prints out the results 
+	 */
 	public Client(){
 	
-		UserIO io = new UserIO();
+		io = new UserIO();
 		String s = io.getString();
 		
 		Socket sock;
@@ -39,29 +57,42 @@ public class Client{
 			ObjectInputStream oi = new ObjectInputStream(in);
 			Object o;
 			
+			//wait for a response
 			while( (o = oi.readObject()) == null);
 			
-			MessageImp1 m;
-			int charCount = 0;
-			int digitCount = 0;
-			if ( o instanceof MessageImp1){
-				m = (MessageImp1) o;
-				
-				charCount = m.getCharacterCount();
-				digitCount = m.getDigitCount();
-				
-				System.out.println(charCount + ":" + digitCount);
-			}else{
-				System.out.println("SOMTHING HAS GONE HORRIBLY WRONG!!!!! AHHHHHHHHHHH!!!!");
-				System.out.println("I am sure the server is sorry for sending the wrong thing back");
-			}
+			MessageImp m = processreturn(o);
+			
+			io.print("The number of characters in the entered string is: " + m.getCharacterCount());
+			io.print("The number of digits in the endered string is: " + m.getDigitCount());
 			
 			sock.close();
 			
+		}catch(WrongObjectReturned e){
+			
+			io.print("SOMTHING HAS GONE HORRIBLY WRONG!!!!! AHHHHHHHHHHH!!!!");
+			io.print("I am sure the server is sorry for sending the wrong thing back");
+		
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
 	}
 
+	/**
+	 * Handles the object returned from the server
+	 * 
+	 * @param o The object to handle
+	 * @return A messageImp object
+	 * @throws WrongObjectReturned If the object returned is not of the expected type
+	 */
+	private MessageImp processreturn(Object o) throws WrongObjectReturned {
+		
+		if ( o instanceof MessageImp){
+						
+			return (MessageImp) o;
+			
+		}else{
+			
+			throw new WrongObjectReturned();
+		}
+	}
 }
