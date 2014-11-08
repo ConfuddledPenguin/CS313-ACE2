@@ -22,8 +22,15 @@ public class MessageImp implements Message, Serializable {
 	@Override
 	public void setCounts(String s) {
 		
+		if(s == null){
+			charCount = 0;
+			digitCount = 0;
+			return;
+		}
+		
 		charCount = s.length();
 		
+		digitCount = 0; // first reset the value
 		for(int i = 0; i < charCount; i++){
 		
 			if ( Character.isDigit(s.charAt(i))){
