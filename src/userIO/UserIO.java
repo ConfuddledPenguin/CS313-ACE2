@@ -1,4 +1,4 @@
-package client;
+package userIO;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

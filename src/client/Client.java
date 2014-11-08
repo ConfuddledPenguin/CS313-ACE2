@@ -3,10 +3,10 @@ package client;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
-import java.lang.invoke.WrongMethodTypeException;
 import java.net.Socket;
 
-import message.MessageImp;
+import userIO.UserIO;
+import message.Message;
 
 /**
  * The client for this system.
@@ -28,7 +28,7 @@ public class Client{
 	
 	/**
 	 * The constructor for the Client.
-	 * Since I possess a high degree of laziness the code is all in here.
+	 * Since I possess a high degree of laziness most of the is code in here.
 	 * 
 	 * This method gets input to the user in the form of a string, which 
 	 * is then passed to the server.
@@ -39,6 +39,7 @@ public class Client{
 	public Client(){
 	
 		io = new UserIO();
+		io.print("Please enter the string to send to the server");
 		String s = io.getString();
 		
 		Socket sock;
@@ -58,12 +59,11 @@ public class Client{
 			Object o;
 			
 			//wait for a response
-			while( (o = oi.readObject()) == null);
+			while( (o = oi.readObject()) == null){
+				Thread.yield();
+			}
 			
-			MessageImp m = processreturn(o);
-			
-			io.print("The number of characters in the entered string is: " + m.getCharacterCount());
-			io.print("The number of digits in the endered string is: " + m.getDigitCount());
+			processreturn(o);
 			
 			sock.close();
 			
@@ -81,14 +81,16 @@ public class Client{
 	 * Handles the object returned from the server
 	 * 
 	 * @param o The object to handle
-	 * @return A messageImp object
 	 * @throws WrongObjectReturned If the object returned is not of the expected type
 	 */
-	private MessageImp processreturn(Object o) throws WrongObjectReturned {
+	private void processreturn(Object o) throws WrongObjectReturned {
 		
-		if ( o instanceof MessageImp){
-						
-			return (MessageImp) o;
+		if ( o instanceof Message){
+			
+			Message m = (Message) o;
+			
+			io.print("The number of characters in the entered string is: " + m.getCharacterCount());
+			io.print("The number of digits in the endered string is: " + m.getDigitCount());
 			
 		}else{
 			
