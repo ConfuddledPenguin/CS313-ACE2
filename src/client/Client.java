@@ -67,7 +67,7 @@ public class Client{
 			
 			sock.close();
 			
-		}catch(WrongObjectReturned e){
+		}catch(WrongObjectReturnedException e){
 			
 			io.print("SOMTHING HAS GONE HORRIBLY WRONG!!!!! AHHHHHHHHHHH!!!!");
 			io.print("I am sure the server is sorry for sending the wrong thing back");
@@ -81,9 +81,9 @@ public class Client{
 	 * Handles the object returned from the server
 	 * 
 	 * @param o The object to handle
-	 * @throws WrongObjectReturned If the object returned is not of the expected type
+	 * @throws WrongObjectReturnedException If the object returned is not of the expected type
 	 */
-	private void processreturn(Object o) throws WrongObjectReturned {
+	private void processreturn(Object o) throws WrongObjectReturnedException {
 		
 		if ( o instanceof Message){
 			
@@ -94,7 +94,7 @@ public class Client{
 			
 		}else{
 			
-			throw new WrongObjectReturned();
+			throw new WrongObjectReturnedException();
 		}
 	}
 }

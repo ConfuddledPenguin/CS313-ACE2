@@ -1,6 +1,6 @@
 package client;
 
-public class WrongObjectReturned extends Exception {
+public class WrongObjectReturnedException extends Exception {
 
 	/**
 	 * 
