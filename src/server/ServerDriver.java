@@ -12,15 +12,14 @@ public class ServerDriver {
 		Server s = new Server();
 		new Thread(s).start();
 		
-		Boolean run = true;
 		UserIO io = new UserIO();
-		while(run){
+		while(true){
 			
 			io.print("Exit server: Y/n");
 			if(io.getYesNo()){
 				
-				run = false;
 				s.stop();
+				break;
 			}
 		}
 	}

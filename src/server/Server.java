@@ -53,10 +53,7 @@ public class Server implements Runnable{
 				}
 				
 				threadPool.execute(new ServerWorker(client));
-				
 			}
-			
-			threadPool.shutdown();
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -80,6 +77,9 @@ public class Server implements Runnable{
 	public synchronized void stop(){
         run = false;
         try{
+        	//Shut down all running threads
+            threadPool.shutdown();
+            //Close the socket
             sock.close();
         }catch (IOException e){
             throw new RuntimeException("Cannot close port 6100" + e);
