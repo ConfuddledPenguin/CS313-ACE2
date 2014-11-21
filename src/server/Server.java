@@ -26,14 +26,26 @@ public class Server implements Runnable{
 	
 
 	/**
-	 * 
+	 * Thread starts here
 	 */
 	public void run(){
 		
 		synchronized (this) {
 			this.thread = Thread.currentThread();
-		}
+		}	
 		
+		listen();
+		
+	}
+
+	/**
+	 * Listens to incoming connections
+	 * 
+	 * Once a connection is established it starts the handling
+	 * process
+	 */
+	private void listen(){
+
 		try{
 			
 			openServerSocket();
@@ -52,12 +64,13 @@ public class Server implements Runnable{
 					}
 				}
 				
-				threadPool.execute(new ServerWorker(client));
+				if(client != null)
+					threadPool.execute(new ServerWorker(client));
 			}
 			
 		}catch(Exception e){
 			e.printStackTrace();
-		}	
+		}
 	}
 	
 	/**

@@ -41,27 +41,9 @@ public class ServerWorker implements Runnable{
 			BufferedReader br = new BufferedReader( new InputStreamReader(in));
 			String line;
 			
-			
 			while ( (line = br.readLine()) == null){ //wait for the the client to fill buffer
 				Thread.yield();
 			}
-			
-			/*
-			// This is far from the best way to test if the server will accept more than one
-			// connection at a time, but it works. 
-			//
-			// This is in no way part of my submission, this code is here to make testing
-			// easier.
-			// 
-			// To use this delete the outer comments
-			
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			*/
 			
 			MessageImp m = new MessageImp();
 			m.setCounts(line);

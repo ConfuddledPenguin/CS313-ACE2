@@ -1,5 +1,12 @@
 package client;
 
+/**
+ * This is an exception to raise the issue of the wrong object being
+ * returned from the server
+ * 
+ * @author Tom
+ *
+ */
 public class WrongObjectReturnedException extends Exception {
 
 	/**
