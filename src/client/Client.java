@@ -69,7 +69,7 @@ public class Client{
 			
 		}catch(WrongObjectReturnedException e){
 			
-			io.print("SOMTHING HAS GONE HORRIBLY WRONG!!!!! AHHHHHHHHHHH!!!!");
+			io.print("SOMETHING HAS GONE HORRIBLY WRONG!!!!! AHHHHHHHHHHH!!!!");
 			io.print("I am sure the server is sorry for sending the wrong thing back");
 		
 		}catch(Exception e){

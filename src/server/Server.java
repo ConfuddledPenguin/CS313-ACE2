@@ -16,7 +16,7 @@ public class Server implements Runnable{
 	
 	/*
 	 * Went for a fixed pool as this should prevent the server becoming bogged down
-	 * this processes. 10 threads was chosen at random feel free to chnage this
+	 * this processes. 10 threads was chosen at random feel free to change this
 	 * value if it will not decrease performance
 	 */
 	private ExecutorService threadPool = Executors.newFixedThreadPool(10);

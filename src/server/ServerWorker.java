@@ -18,7 +18,7 @@ import message.MessageImp;
  */
 public class ServerWorker implements Runnable{
 
-	Socket client = null;
+	private Socket client = null;
 	
 	/**
 	 * The constructor for the worker
@@ -33,6 +33,7 @@ public class ServerWorker implements Runnable{
 	/**
 	 * Handles the clients request
 	 */
+	@Override
 	public void run() {
 		
 		try {
